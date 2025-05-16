@@ -1,29 +1,86 @@
 openapi: 3.0.0
 info:
-  title: Sample API
-  version: 1.0.0
-  description: A sample API specification
+  title: Backend API
+  description: API Backend del sistema
+  version: v1
+
 paths:
-  /users:
+  /users/:
     get:
-      summary: Get all users
+      operationId: users_list
+      description: API endpoint that allows users to list users.
+      tags:
+        - users
+      parameters:
+        - name: page
+          in: query
+          description: A page number within the paginated result set.
+          required: false
+          schema:
+            type: integer
       responses:
         '200':
-          description: List of users
+          description: 'Users list'
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
+
+  /users/{id}/:
+    get:
+      operationId: users_read
+      description: API endpoint that allows users to read user by ID.
+      tags:
+        - users
+      parameters:
+        - name: id
+          in: path
+          description: A unique integer value identifying this user.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 'User details'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
 components:
   schemas:
     User:
       type: object
+      required:
+        - username
+        - password
       properties:
         id:
           type: integer
-        name:
+          readOnly: true
+          title: ID
+        username:
           type: string
+          title: Username
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+          maxLength: 150
+          minLength: 1
+          pattern: ^[\w.@+-]+$
         email:
           type: string
+          title: Email address
+          format: email
+          maxLength: 254
+        password:
+          type: string
+          title: Password
+          minLength: 1
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+
+security:
+  - basicAuth: []
