@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Backend API
-  description: API Backend del sistema
+  description: API Backend for Test
   version: v1
 
 paths:
