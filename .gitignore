@@ -1,0 +1,8 @@
+# IDE
+.idea/
+.vscode/
+.DS_Store
+
+# YAML specific
+*.yaml.bak
+*.yml.bak

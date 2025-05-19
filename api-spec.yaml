@@ -27,6 +27,26 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
+    post:
+      operationId: users_create
+      description: API endpoint that allows users to create a new user.
+      tags:
+        - users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: 'User created successfully'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: 'Invalid input data'
 
   /users/{id}/:
     get:
